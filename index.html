@@ -3,44 +3,484 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>My Bio Page</title>
-        <link href="bootstrap.min.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400:9..144,500;9..144,600&Family=IBM+Plex+Sans:wght@400:500;600&display=swap" rel="stylesheet">
+        <style>
+            :root {
+                --ink: #1c1712;
+                --surface: #251f18;
+                --surface-line: #3c3225;
+                --paper: #f2ede4;
+                --paper-dim: #cabfae;
+                --amber: #e8a33d;
+                --teal: #6fa88f;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                background: var(--ink);
+                color: var(--paper);
+                font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+                line-height: 1.6;
+            }
+
+            a {
+                color: var(--amber);
+            }
+
+            .wrap {
+                max-width: 920px;
+                margin: 0 auto;
+                padding: 0 24px;
+            }
+
+            nav.top {
+                position: sticky;
+                top: 0;
+                background:rgba(28, 23, 18, 0.9);
+                backdrop-filter: blur(6px);
+                border-bottom: 1px solid var(--surface-line);
+            }
+
+            nav.top .wrap {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-top: 14px;
+                padding-bottom: 14px;
+            }
+
+            nav.top .name {
+                font-family: 'Fraunces', Georgia, serif;
+                font-size: 1.1rem;
+                letter-spacing: 0.02em;
+            }
+
+            nav.top ul {
+                list-style: none;
+                display: flex;
+                gap: 22px;
+                margin: 0;
+                padding: 0;
+            }
+
+            nav.top a{
+                color: var(--paper-dim);
+                text-decoration: none;
+                font-size: 0.95rem;
+            }
+
+            nav.top a:hover {
+                color: var(--amber);
+            }
+
+            header.hero {
+                padding: 72px 0 50px;
+                border-bottom: 1px solid var(--surface-line);
+            }
+
+            header.hero .grid {
+                display: grid;
+                grid-template-columns: 1fr 278px;
+                gap: 40px;
+                align-items: stretch;
+            }
+
+            header.hero h1 {
+                font-family: 'Fraunces', Georgia, serif;
+                font-weight: 500;
+                font-size: clamp(2.4rem, 6vw, 3.6rem);
+                line-height: 1.05;
+                margin: 0 0 10px;
+            }
+
+            header.hero p.tagline {
+                max-width: 46ch;
+                color: var(--paper-dim);    
+                font-size: 1.08rem;
+                line-height: 1.5;
+                margin: 0 0 28px;
+            }
+
+            header.hero .cta-row {
+                display: flex;
+                gap: 14px;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                display: inline-block;
+                padding: 10px 20px;
+                border-radius: 6px;
+                text-decoration: none;
+                font-size: 0.95rem;
+                font-weight: 500;
+                border: 1px solid transparent;
+            }
+
+            .btn-primary {
+                background: var(--amber);
+                color: var(--ink);
+            }
+
+            .btn-primary:hover {
+                background: #f0b45c;
+            }
+
+            .btn-ghost {
+                background: var(--surface);
+                color: var(--paper);
+                border-color: var(--surface-line);
+            }
+
+            .btn-ghost:hover {
+                border-color: var(--amber);
+                color: var(--amber);
+            }
+
+            .portrait {
+                width: 257px;
+                justify-self: start;
+                border-radius: 10px;
+                overflow: hidden;
+                border: 1px solid var(--surface-line);
+                background: var(--surface);
+            }
+
+            .portrait img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            section {
+                padding: 56px 0;
+                border-bottom: 1px solid var(--surface-line);
+            }
+
+            section:last-of-type {
+                border-bottom: none;
+            }
+
+            h2.section-title {
+                font-family: 'Fraunces', Georgia, serif;
+                font-weight: 500;
+                font-size: 1.6rem;
+                margin: 0 0 8px;
+            }
+
+            p.section-sub {
+                color: var(--paper-dim);
+                margin: 0 0 32px;
+                max-width: 56ch;
+            }
+
+            #about .about-body {
+                max-width: 62ch;
+                color: var(--paper-dim);
+            }
+
+            #about .about-body strong {
+                color: var(--paper);
+                font-weight: 500;
+            }
+
+            .track {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                border-left: 2px solid var(--surface-line);
+            }
+
+            .track li {
+                position: relative;
+                padding: 0 0 26px 26px;
+            }
+
+            .track .t-row {
+                position: relative;
+            }
+
+            .track .t-row::before {
+                content: '';
+                position: absolute;
+                left: -34px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: var(--ink);
+                border: 2px solid var(--surface-line);
+            }
+
+            .track li.done .t-row::before {
+                background: var(--teal);
+                border-color: var(--teal);
+            }
+
+            .track li.current .t-row::before {
+                background: var(--amber);
+                border-color: var(--amber);
+            }
+
+            .track .t-title {
+                font-weight: 500;
+                color: var(--paper);
+                line-height: 24px;
+            }
+
+            .track .t-status {
+                display: inline-block;
+                margin-left: 10px;
+                font-size: 0.8rem;
+                color: var(--paper-dim);
+                list-style-type: 24px;
+            }
+
+            .track li.current .t-status {
+                color: var(--amber);
+            }
+
+            .track .t-desc {
+                color: var(--paper-dim);
+                font-size: 0.95rem;
+                margin-top: 2px;
+            }
+
+            .chip-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .chip {
+                background: (232, 163, 61, 0.1);
+                border: 1px solid rgba(232, 163, 61, 0.35);
+                color: var(--amber);
+                padding: 7px 14px;
+                border-radius: 999px;
+                font-size: 0.9rem;
+            }
+
+            .split {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 48px;
+            }
+
+            .split h3 {
+                font-family: 'Fraunces', Georgia, serif;
+                font-weight: 500;
+                font-size: 1.15rem;
+                margin: 0 0 4px;
+            }
+
+            .split .hint {
+                color: var(--paper-dim);
+                font-size: 0.85rem;
+                margin: 0 0 18px;
+            }
+
+            .split ol, .split ul {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+
+            .split li {
+                padding: 10px 0;
+                border-bottom: 1px dashed var(--surface-line);
+                color: var(--paper);
+                display: flex;
+                gap: 12px;
+                align-items: baseline;
+            }
+
+            .split li:last-child {
+                border-bottom: none;
+            }
+
+            .split .idx {
+                color: var(--teal);
+                font-variant-numeric: tabular-nums;
+                width: 1.4em;
+                flex-shrink: 0;
+            }
+
+            .music .idx {
+                color: var(--amber);
+            }
+
+            footer.contact {
+                padding: 56px 0 72px;
+            }
+
+            footer.contact p {
+                color: var(--paper-dim);
+                max-width: 50ch;
+            }
+
+            footer.contact .cta-row {
+                margin-top: 22px;
+            }
+            
+            .fine-print {
+                margin-top: 28px;
+                padding-top: 24px;
+                border-top: 1px solid var(--surface-line);
+                color: var(--paper-dim);
+                font-size: 0.85rem;
+            }
+
+        </style>
     </head> 
     <body>
-        <div class="container">
-            <div class="row">
-                <div id="bio" class="col-12 col-lg-6 text-center">
-                    <h1>Edwin</h1>
-                    <img src="photo.jpg" alt="My Photo" class="img-fluid" />
-                </div>
-                <div id="more" class="col-12 col-lg-6">
-                    <h2>About Me</h2>
-                    <p>Hello! My name is Edwin. I am an aspiring software developer
-                       with a passion for creating innovative solutions. In my free time,
-                       I enjoy sports, reading, video editing, and exploring new technologies.</p>
-                </div>
-                <div id="music" class="col-12 col-lg-6">
-                    <h2>Favorite Music Artists</h2>
-                    <ul>
-                        <li>Kanye West</li>
-                        <li>Kendrick Lamar</li>
-                        <li>Sade</li>
-                        <li>Darlene Zschech</li>
-                        <li>Brent Faiyaz</li>
-                    </ul>
-                </div>
-                <div id="films" class="col-12 col-lg-6">
-                    <h2>Favorite Films</h2>
-                    <ol>
-                        <li>The Godfather</li>
-                        <li>Interstellar</li>
-                        <li>The Dark Knight</li>
-                        <li>Die Hard</li>
-                        <li>Spider-Man 2</li>
-                    </ol>
-                    <a href="https://www.meta.com/user/123" class="btn btn-primary" target="_blank">My Meta Profile</a>
-                </div>
+        <nav class="top">
+            <div class="wrap">
+                <span class="name">Edwin</span>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#journey">Journey</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#likes">Likes</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+<header class="hero">
+    <div class="wrap grid">
+        <div>
+            <h1>Edwin</h1>
+            <p class="tagline">Front-End Developer in training. Building my way into web development through Meta's Front-End Development Professional Certificate: one course, one commit, one broken layout at a time.</p>
+            <div class="cta-row">
+                <a class="btn btn-primary" href="https://github.com/eddykay-7" target="_blank" rel="noopener">GitHub</a>
+                <a class="btn btn-ghost" href="#journey">Check out my progress</a>
             </div>
         </div>
-        <script src="bootstrap.bundle.min.js"></script>
+        <div class="portrait">
+            <img src="my-portrait.jpg" alt="Edwin's portrait">
+        </div>
+    </div>
+</header>
+<section id="about">
+    <div class="wrap">
+        <h2 class="section-title">About Me</h2>
+        <p class="section-sub">A little more background, for anyone curious.</p>
+        <p class="about-body">
+            Hello! My name is <strong>Edwin</strong>. I'm an aspiring software developer with a keen 
+            eye for design and an intriguing passion for building stuff that lives on the web. 
+            Currently, that means working through Meta's Front-End Developer 
+            Professional Certificate via DevCareer and Coursera. As it happens, this 
+            page itself is one of my assignments, and I plan to improve it and 
+            document my journey as I learn new things. Outside the world of code, I 
+            enjoy sports, reading, video games, video/photo editing and conducting 
+            research on what's new in tech. <i>Mentally surviving Real Madrid football.</i>
+        </p>
+    </div>
+</section>
+<section id="journey">
+    <div class="wrap">
+        <h2 class="section-title">My Learning Journey</h2>
+        <p class="section-sub">Where I'm at in the Meta Front-End Developer path right now.
+        <ul class="track">
+            <li class="done">
+                <div class="t-row">
+                    <span class="t-title">Introduction to Front-End Development</span>
+                    <span class="t-status">Completed</span>
+                </div>
+                <p class="t-desc">Semantic HTML, CSS box model, and this bio page as the graded project.</p>
+            </li>
+            <li class="current">
+                <div class="t-row">
+                    <span class="t-title">Programming with JavaScript</span>
+                    <span class="t-status">In progress</span>
+                </div>
+                <p class="t-desc">Working through functions, arrays, objects, and error handling.</p>
+            </li>
+            <li>
+                <div class="t-row">
+                    <span class="t-title">Version Control</span>
+                    <span class="t-status">Up next</span>
+                </div>
+            </li>
+            <li>
+                <div class="t-row">
+                    <span class="t-title">HTML and CSS in depth</span>
+                    <span class="t-status">Up next</span>
+                </div>
+            </li>
+            <li>
+                <div class="t-row">
+                    <span class="t-title">IBM Back-End Developer Professional Certificate</span>
+                    <span class="t-status">Planned after wrapping up Meta FE Dev't Cert</span>
+                </div>
+            </li>
+        </ul>
+        </p>
+    </div>
+</section>
+<section id="skills">
+    <div class="wrap">
+        <h2 class="section-title">Toolkit</h2>
+        <p class="section-sub">What I'm building confidence in, one project at a time.</p>
+        <div class="chip-row">
+            <span class="chip">HTML</span>
+            <span class="chip">CSS</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">Microsoft Visual Studio Code</span>
+            <span class="chip">Responsive Layout</span>
+            <span class="chip">Git &amp; GitHub</span>
+            <span class="chip">GitHub Pages</span>
+        </div>
+    </div>
+</section>
+<section id="likes">
+    <div class="wrap">
+        <h2 class="section-title">A few of my favourites</h2>
+        <p class="section-sub">Because a bio page must have a bit of play and not be all play.</p>
+        <div class="split">
+            <div class="music">
+                <h3>Music</h3>
+                <p class="hint">My current artist rotation</p>
+                <ul>
+                    <li><span class="idx">01</span> Kanye West</li>
+                    <li><span class="idx">02</span> Kendrick Lamar</li>
+                    <li><span class="idx">03</span> Sade</li>
+                    <li><span class="idx">04</span> Darlene Zschech</li>
+                    <li><span class="idx">05</span> Brent Faiyaz</li>
+                </ul>
+            </div>
+            <div class="films">
+                <h3>Films</h3>
+                <p class="hint">Ranked, and I'll passionately defend the order.</p>
+                <ol>
+                    <li><span class="idx">01</span> The Godfather</li>
+                    <li><span class="idx">02</span> Interstellar</li>
+                    <li><span class="idx">03</span> The Dark Knight</li>
+                    <li><span class="idx">04</span> Die Hard</li>
+                    <li><span class="idx">05</span> Spider-Man 2</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="contact" id="contact">
+    <div class="wrap">
+        <h2 class="section-title">Get in touch</h2>
+        <p>I'm a beginner, and I'd like to connect with other learners and devs. We can get in touch via LinkedIn and GitHub.</p>
+        <div class="cta-row">
+            <a class="btn btn-primary" href="https://www.linkedin.com/in/edwin-adu-adjei/" target="_blank" rel="noopener">Linkedin</a>
+            <a class="btn btn-primary" href="https://github.com/eddykay-7" target="_blank" rel="noopener">GitHub</a>
+        </div>
+        <p class="fine-print">Built by Edwin as part of the Meta Front-End Developer Professional Certificate (sponsored by Coursera x DevCareer)</p>
+    </div>
+</footer>
 </body>
 </html>
